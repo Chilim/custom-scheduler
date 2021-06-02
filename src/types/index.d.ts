@@ -1,5 +1,7 @@
 export type CalendarView = 'day' | 'week';
 
+export type WeekDay = 'Mo' | 'Di' | 'Mi' | 'Do' | 'Fr' | 'Sa' | 'So';
+
 export type CalendarHeaderCell = {
   label: string | null;
   accessor: string | null;

@@ -1,4 +1,4 @@
-import { CalendarView, CalendarBodyCell, CalendarHeaderCell } from '../types';
+import { CalendarView, CalendarBodyCell, CalendarHeaderCell, WeekDay } from '../types';
 import * as timeUtils from './timeUtils';
 
 const HOURS_IN_A_DAY = 24;
@@ -10,14 +10,15 @@ export class Grid {
   private rowsNum: number;
   private view: CalendarView;
   private days = {
-    mon: 'Montag',
-    die: 'Dienstag',
-    mit: 'Mitwoch',
-    don: 'Donerstag',
-    fri: 'Fritag',
-    sam: 'Samstag',
-    son: 'Sontag',
+    mon: 'Mo',
+    die: 'Di',
+    mit: 'Mi',
+    don: 'Do',
+    fri: 'Fr',
+    sam: 'Sa',
+    son: 'So',
   };
+  today: WeekDay;
 
   private step: number;
 
@@ -26,6 +27,7 @@ export class Grid {
     this.rowsNum = (MINUTES_IN_AN_HOUR / step) * HOURS_IN_A_DAY;
     this.view = view;
     this.step = step;
+    this.today = this.getToday().day as WeekDay;
   }
 
   private getWeekHeader() {
@@ -62,6 +64,11 @@ export class Grid {
     }
 
     return timeLine;
+  }
+
+  private getToday() {
+    const today = timeUtils.getCurrentDate();
+    return today;
   }
 
   private generateGrid() {
@@ -112,6 +119,7 @@ export class Grid {
     const layout = this.generateGrid();
     const weekDays = this.getHeader();
     const timeSlots = this.getTimeSlots();
+    this.getToday();
     return this.fillGridWithValues(layout, weekDays, timeSlots);
   }
 }

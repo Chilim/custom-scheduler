@@ -2,32 +2,23 @@ import React from 'react';
 import { Table, Thead, Tbody, Tr } from '@chakra-ui/react';
 import HeaderSlot from './HeaderSlot';
 import BodySlot from './BodySlot';
-import { Grid } from '../utils/Grid';
 import { CalendarBodyCell, CalendarHeaderCell } from '../types';
+import useSchedule from '../utils/useSchedule';
 
 type PropsType = {
   duration?: number;
   view?: 'week' | 'day';
 };
 
-type StateType = {
-  header: CalendarHeaderCell[];
-  body: CalendarBodyCell[][];
-};
-
 const Scheduler = ({ duration = 30, view = 'week' }: PropsType) => {
-  const [table, setGrid] = React.useState<StateType | null>(null);
+  const { header, body, loading } = useSchedule(view, duration);
 
-  React.useEffect(() => {
-    const table = new Grid(view, duration);
-    const data = table.generateTable();
-    // console.log("body", data.body);
-    setGrid(() => data);
-  }, [view, duration]);
+  console.log('header', header);
+  console.log('body', body);
+  console.log('loading', loading);
 
   const renderHeader = () => {
-    if (table) {
-      const { header } = table;
+    if (!loading && header) {
       return header.map((cell) => {
         return <HeaderSlot key={cell.label || 'empty'}>{cell.label}</HeaderSlot>;
       });
@@ -40,8 +31,7 @@ const Scheduler = ({ duration = 30, view = 'week' }: PropsType) => {
   };
 
   const renderBody = () => {
-    if (table) {
-      const { body } = table;
+    if (!loading && body) {
       const rows = body.map((line, idx) => {
         return <Tr key={idx}>{renderBodyCells(line)}</Tr>;
       });
