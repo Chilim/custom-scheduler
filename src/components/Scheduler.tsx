@@ -15,7 +15,7 @@ type StateType = {
   body: CalendarBodyCell[][];
 };
 
-const Scheduler = ({ duration = 40, view = 'week' }: PropsType) => {
+const Scheduler = ({ duration = 30, view = 'week' }: PropsType) => {
   const [table, setGrid] = React.useState<StateType | null>(null);
 
   React.useEffect(() => {
@@ -36,11 +36,7 @@ const Scheduler = ({ duration = 40, view = 'week' }: PropsType) => {
   };
 
   const renderBodyCells = (line: CalendarBodyCell[]) => {
-    return line.map((l, idx) => (
-      <BodySlot key={`l.payload.time-${idx}`}>
-        {l.type === 'timeCell' ? l.payload.time : 'cell'}
-      </BodySlot>
-    ));
+    return line.map((l, idx) => <BodySlot key={`l.payload.time-${idx}`} params={l} />);
   };
 
   const renderBody = () => {
