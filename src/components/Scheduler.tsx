@@ -25,12 +25,12 @@ const Scheduler = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedControls = React.useMemo(() => ({ next, previous }), []);
+	const memoizedControls = React.useMemo(() => ({ next, previous, selectView }), [view]);
 
   return (
     <Flex flexDir='column'>
       <Toolbar controls={memoizedControls} />
-      <Grid date={date} />
+			<Grid date={date} view={view} />
     </Flex>
   );
 };
