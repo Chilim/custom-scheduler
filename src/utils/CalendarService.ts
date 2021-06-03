@@ -23,8 +23,7 @@ export class CalendarService {
 
   private getWeekHeader() {
     const days = this.days;
-    const dates = timeUtils.getWeekDates(new Date('May 24 2021'), 7);
-    console.log(dates);
+    const dates = timeUtils.getWeekDates(this.date, 7);
     const keys = Object.keys(days);
 
     return keys.map((key) => ({
