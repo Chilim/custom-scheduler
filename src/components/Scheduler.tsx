@@ -13,10 +13,6 @@ type PropsType = {
 const Scheduler = ({ duration = 30, view = 'week' }: PropsType) => {
   const { header, body, loading } = useSchedule(view, duration);
 
-  console.log('header', header);
-  console.log('body', body);
-  console.log('loading', loading);
-
   const renderHeader = () => {
     if (!loading && header) {
       return header.map((cell) => {
