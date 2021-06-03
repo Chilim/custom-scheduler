@@ -1,52 +1,37 @@
 import React from 'react';
-import { Table, Thead, Tbody, Tr } from '@chakra-ui/react';
-import HeaderSlot from './HeaderSlot';
-import BodySlot from './BodySlot';
-import { CalendarBodyCell } from '../types';
-import useSchedule from '../utils/useSchedule';
+import Grid from './Grid';
+import Toolbar from './toolbar';
+import { Flex } from '@chakra-ui/layout';
+import { DAYS_IN_WEEK, INITIAL_DATE } from '../constants';
+import { getPreviousDate, getNextDate } from '../utils/timeUtils';
+import { CalendarView } from '../types';
 
-type PropsType = {
-  duration?: number;
-  view?: 'week' | 'day';
-};
+const Scheduler = () => {
+  const [date, setDate] = React.useState<Date>(INITIAL_DATE);
+  const [view, setView] = React.useState<CalendarView>('week');
 
-const Scheduler = ({ duration = 30, view = 'week' }: PropsType) => {
-  const { header, body, loading } = useSchedule(view, duration);
-
-  const renderHeader = () => {
-    if (!loading && header) {
-      return header.map((cell) => {
-        return (
-          <HeaderSlot key={cell.label || 'empty'}>
-            {cell.label && `${cell.label}. ${cell.date}`}
-          </HeaderSlot>
-        );
-      });
-    }
-    return null;
+  const previous = () => {
+    const newDate = getPreviousDate(date, DAYS_IN_WEEK);
+    setDate(newDate);
   };
 
-  const renderBody = () => {
-    const renderBodyCells = (line: CalendarBodyCell[]) => {
-      return line.map((l, idx) => <BodySlot key={`l.payload.time-${idx}`} params={l} />);
-    };
-
-    if (!loading && body) {
-      const rows = body.map((line, idx) => {
-        return <Tr key={idx}>{renderBodyCells(line)}</Tr>;
-      });
-      return rows;
-    }
-    return null;
+  const next = () => {
+    const newDate = getNextDate(date, DAYS_IN_WEEK);
+    setDate(newDate);
   };
+
+  const selectView = (newView: CalendarView) => {
+    setView(newView);
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const memoizedControls = React.useMemo(() => ({ next, previous }), []);
 
   return (
-    <Table size='sm'>
-      <Thead>
-        <Tr>{renderHeader()}</Tr>
-      </Thead>
-      <Tbody>{renderBody()}</Tbody>
-    </Table>
+    <Flex flexDir='column'>
+      <Toolbar controls={memoizedControls} />
+      <Grid date={date} />
+    </Flex>
   );
 };
 
