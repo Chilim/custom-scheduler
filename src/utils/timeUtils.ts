@@ -56,3 +56,27 @@ export const getCurrentDate = () => {
   const today = formatDate(getToday());
   return extractDateValues(today);
 };
+
+const operations = {
+  0: (date: Date) => date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1),
+  1: (date: Date) => date.getDate() - (date.getDay() - 1) + 1,
+  2: (date: Date) => date.getDate() - (date.getDay() - 1) + 2,
+  3: (date: Date) => date.getDate() - (date.getDay() - 1) + 3,
+  4: (date: Date) => date.getDate() - (date.getDay() - 1) + 4,
+  5: (date: Date) => date.getDate() - (date.getDay() - 1) + 5,
+  6: (date: Date) => date.getDate() - (date.getDay() - 1) + 6,
+} as { [key: string]: (date: Date) => number };
+
+const getCurentDate = (date: Date, opNum: number) => {
+  const newDate = operations[opNum](date);
+  return new Date(date.setDate(newDate));
+};
+
+export const getWeekDates = (currentDate: Date, daysInWeek: number) => {
+  const range = [...Array(daysInWeek).keys()].map(() => new Date(currentDate));
+  const dates = range.map((date, idx) => {
+    return getCurentDate(date, idx);
+  });
+
+  return dates.map(getFormattedDate);
+};
