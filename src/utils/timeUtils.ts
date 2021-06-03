@@ -52,8 +52,8 @@ export const extractDateValues = (dateStr: string) => {
 
 export const getToday = () => new Date();
 
-export const getCurrentDate = () => {
-  const today = formatDate(getToday());
+export const getFormattedDate = (date?: Date) => {
+  const today = formatDate(date ?? getToday());
   return extractDateValues(today);
 };
 
