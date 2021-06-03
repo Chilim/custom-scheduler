@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, Thead, Tbody, Tr } from '@chakra-ui/react';
 import HeaderSlot from './HeaderSlot';
 import BodySlot from './BodySlot';
-import { CalendarBodyCell, CalendarHeaderCell } from '../types';
+import { CalendarBodyCell } from '../types';
 import useSchedule from '../utils/useSchedule';
 
 type PropsType = {
