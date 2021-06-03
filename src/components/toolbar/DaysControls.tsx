@@ -9,10 +9,10 @@ type PropsType = {
 const DaysControl = ({ next, previous }: PropsType) => {
   return (
     <Flex>
-      <Button color='yellow.500' onClick={previous}>
+      <Button color="yellow.500" onClick={previous}>
         Previous
       </Button>
-      <Button color='telegram.500' onClick={next}>
+      <Button color="telegram.500" onClick={next}>
         Next
       </Button>
     </Flex>

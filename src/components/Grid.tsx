@@ -6,8 +6,8 @@ import { CalendarBodyCell } from '../types';
 import useSchedule from '../utils/useSchedule';
 
 type PropsType = {
-  duration?: number;
-  view?: 'week' | 'day';
+  duration: number;
+  view: 'week' | 'day';
   date: Date;
 };
 
@@ -29,12 +29,14 @@ const Grid = ({ duration = 30, view = 'week', date }: PropsType) => {
 
   const renderBody = () => {
     const renderBodyCells = (line: CalendarBodyCell[]) => {
-      return line.map((l, idx) => <BodySlot key={`l.payload.time-${idx}`} params={l} />);
+      return line.map((l) => (
+        <BodySlot key={`${l.payload.day || 'first'}-${l.payload.time}`} params={l} />
+      ));
     };
 
     if (!loading && body) {
-      const rows = body.map((line, idx) => {
-        return <Tr key={idx}>{renderBodyCells(line)}</Tr>;
+      const rows = body.map((line) => {
+        return <Tr key={line[0].payload.time || 'first'}>{renderBodyCells(line)}</Tr>;
       });
       return rows;
     }
@@ -42,7 +44,7 @@ const Grid = ({ duration = 30, view = 'week', date }: PropsType) => {
   };
 
   return (
-    <Table size='sm'>
+    <Table size="sm">
       <Thead>
         <Tr>{renderHeader()}</Tr>
       </Thead>

@@ -19,7 +19,7 @@ const BodySlot = ({ params }: PropsType) => {
   }, [params]);
 
   return (
-    <Cell type={params.type} border='1px solid orange'>
+    <Cell type={params.type} border="1px solid orange">
       {content}
     </Cell>
   );

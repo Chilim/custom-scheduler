@@ -79,7 +79,7 @@ const useSchedule = (view: CalendarView, step = 30, date: Date) => {
 
   /** first on mount set current date */
   React.useEffect(() => {
-    dispatch({ type: 'INITIALIZE', date: date });
+    dispatch({ type: 'INITIALIZE', date });
   }, [date]);
 
   /** set params */
@@ -97,7 +97,7 @@ const useSchedule = (view: CalendarView, step = 30, date: Date) => {
         state.rowsNumber,
         state.step,
         state.columnsNumber,
-        state.pivot as Date
+        state.pivot as Date,
       );
       const { header, body } = gridService.generateTable();
       dispatch({ type: 'CREATE_GRID', header, body });
@@ -117,7 +117,7 @@ const useSchedule = (view: CalendarView, step = 30, date: Date) => {
       header: state.gridHeader,
       body: state.gridBody,
     }),
-    [state.gridHeader, state.gridBody]
+    [state.gridHeader, state.gridBody],
   );
 
   return { header: memoizedGrid.header, body: memoizedGrid.body, loading: state.loading };
