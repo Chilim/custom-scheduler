@@ -1,20 +1,10 @@
 import React from 'react';
 import { CalendarBodyCell, CalendarHeaderCell, CalendarView } from '../types';
-import * as timeUtils from './timeUtils';
+import { CalendarService } from './CalendarService';
 
 const HOURS_IN_A_DAY = 24;
 const MINUTES_IN_AN_HOUR = 60;
 const START_TIME = '00:00';
-
-const days = {
-  mon: 'Mo',
-  die: 'Di',
-  mit: 'Mi',
-  don: 'Do',
-  fri: 'Fr',
-  sam: 'Sa',
-  son: 'So',
-};
 
 const actions = {
   inititialize: (date: Date) => ({ type: 'INITIALIZE', date } as const),
@@ -100,102 +90,27 @@ const useSchedule = (view: CalendarView, step = 30) => {
 
   /** create grid */
   React.useEffect(() => {
-    const generateSchudulerGrid = () => {
-      const layout = generateGrid();
-      const weekDays = getHeader();
-      const timeSlots = getTimeSlots();
-      return fillGridWithValues(layout, weekDays, timeSlots);
-    };
-
-    const getWeekHeader = () => {
-      const keys = Object.keys(days);
-
-      return keys.map((key) => ({
-        label: days[key as keyof typeof days],
-        accessor: key,
-      }));
-    };
-
-    const getHeader = () => {
-      if (state.view === 'week') {
-        return getWeekHeader();
-      }
-      return getWeekHeader();
-    };
-
-    const getTimeSlots = () => {
-      let prevTime = START_TIME;
-      let timeLine = [];
-
-      for (let i = 0; i < state.rowsNumber; i += 1) {
-        if (i === 0) {
-          const time = timeUtils.getDateFromHours(START_TIME);
-          timeLine.push(time);
-          prevTime = time;
-          continue;
-        }
-        const time = timeUtils.addMinutes(state.step, prevTime);
-        timeLine.push(time);
-        prevTime = time;
-      }
-
-      return timeLine;
-    };
-
-    const generateGrid = () => {
-      const grid = [];
-      for (let i = 0; i < state.columnsNumber; i += 1) {
-        for (let j = 0; j < state.rowsNumber; j += 1) {
-          grid.push([i, j]);
-        }
-      }
-      return grid;
-    };
-
-    const fillGridWithValues = (
-      layout: number[][],
-      days: CalendarHeaderCell[],
-      timeSlots: string[]
-    ) => {
-      const header = [{ label: null, accessor: null }, ...days];
-
-      const mappedBody = layout.reduce((acc, coord, idx) => {
-        const [column, row] = coord;
-
-        if (row === 0) return acc;
-
-        let cell;
-
-        if (column === 0 && row > 0) {
-          cell = {
-            type: 'timeCell' as const,
-            payload: { time: timeSlots[idx - 1], day: null },
-          };
-        } else {
-          cell = {
-            type: 'dataCell' as const,
-            payload: { time: timeSlots[row - 1], day: days[column - 1].label },
-          };
-        }
-
-        return { ...acc, [row]: acc[row] ? [...acc[row], cell] : [cell] };
-      }, {} as { [key: string]: CalendarBodyCell[] });
-
-      const body = [];
-
-      for (let [_, value] of Object.entries(mappedBody)) {
-        body.push(value);
-      }
-
-      return { header, body };
-    };
-
     if (state.shallCreateGrid) {
-      const { header, body } = generateSchudulerGrid();
+      const gridService = new CalendarService(
+        state.view,
+        START_TIME,
+        state.rowsNumber,
+        state.step,
+        state.columnsNumber,
+        state.pivot as Date
+      );
+      const { header, body } = gridService.generateTable();
       dispatch({ type: 'CREATE_GRID', header, body });
       dispatch({ type: 'TOGGLE_LOADING', pred: false });
     }
-  }, [state.shallCreateGrid, state.columnsNumber, state.rowsNumber, state.step, state.view]);
+  }, [
+    state.shallCreateGrid,
+    state.columnsNumber,
+    state.rowsNumber,
+    state.step,
+    state.view,
+    state.pivot,
+  ]);
 
   const memoizedGrid = React.useMemo(
     () => ({
