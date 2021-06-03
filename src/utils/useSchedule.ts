@@ -74,13 +74,13 @@ const reducer = (state: typeof initialState = initialState, action: ActionsType)
   }
 };
 
-const useSchedule = (view: CalendarView, step = 30) => {
+const useSchedule = (view: CalendarView, step = 30, date: Date) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   /** first on mount set current date */
   React.useEffect(() => {
-    dispatch({ type: 'INITIALIZE', date: new Date() });
-  }, []);
+    dispatch({ type: 'INITIALIZE', date: date });
+  }, [date]);
 
   /** set params */
   React.useEffect(() => {
