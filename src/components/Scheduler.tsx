@@ -11,12 +11,12 @@ const Scheduler = () => {
   const [view, setView] = React.useState<CalendarView>('week');
 
   const previous = () => {
-    const newDate = getPreviousDate(date, DAYS_IN_WEEK);
+		const newDate = getPreviousDate(date, view === 'week' ? DAYS_IN_WEEK : 1);
     setDate(newDate);
   };
 
   const next = () => {
-    const newDate = getNextDate(date, DAYS_IN_WEEK);
+		const newDate = getNextDate(date, view === 'week' ? DAYS_IN_WEEK : 1);
     setDate(newDate);
   };
 
