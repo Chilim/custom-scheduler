@@ -47,7 +47,7 @@ export const formatDate = (today: Date) => {
 export const extractDateValues = (dateStr: string) => {
   const cleared = dateStr.replaceAll(/[.,]/g, '');
   const list = cleared.split(' ');
-  return { day: list[0], date: Number(list[1]), month: list[2], year: Number(list[3]) };
+  return { day: list[0], date: list[1], month: list[2], year: list[3] };
 };
 
 export const getToday = () => new Date();
