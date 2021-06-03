@@ -5,6 +5,7 @@ export type WeekDay = 'Mo' | 'Di' | 'Mi' | 'Do' | 'Fr' | 'Sa' | 'So';
 export type CalendarHeaderCell = {
   label: string | null;
   accessor: string | null;
+  date: string | null;
 };
 
 export type CalendarBodyCellType = 'timeCell' | 'dataCell';
