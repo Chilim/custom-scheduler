@@ -20,7 +20,11 @@ const Scheduler = ({ duration = 30, view = 'week' }: PropsType) => {
   const renderHeader = () => {
     if (!loading && header) {
       return header.map((cell) => {
-        return <HeaderSlot key={cell.label || 'empty'}>{cell.label}</HeaderSlot>;
+        return (
+          <HeaderSlot key={cell.label || 'empty'}>
+            {cell.label && `${cell.label}. ${cell.date}`}
+          </HeaderSlot>
+        );
       });
     }
     return null;
