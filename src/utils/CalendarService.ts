@@ -33,16 +33,29 @@ export class CalendarService {
     }));
   }
 
+	private getDayHeader() {
+		const days = this.days;
+		const date = timeUtils.getCurrentDate(this.date);
+		const currentDayKey = Object.keys(days).find((k) => days[k as keyof typeof days] === date.day);
+		return [
+			{
+				label: days[currentDayKey as keyof typeof days],
+				accessor: currentDayKey as keyof typeof days,
+				date: date.date || null,
+			},
+		];
+	}
+
   private getHeader() {
     if (this.view === 'week') {
       return this.getWeekHeader();
     }
-    return this.getWeekHeader();
+		return this.getDayHeader();
   }
 
   private getTimeSlots() {
     let prevTime = this.startTime;
-    let timeLine = [];
+		const timeLine = [];
 
     for (let i = 0; i < this.rowsNum; i += 1) {
       if (i === 0) {
@@ -57,11 +70,6 @@ export class CalendarService {
     }
 
     return timeLine;
-  }
-
-  private getToday() {
-    const today = timeUtils.getFormattedDate();
-    return today;
   }
 
   private generateGrid() {
