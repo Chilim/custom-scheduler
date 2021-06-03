@@ -80,3 +80,13 @@ export const getWeekDates = (currentDate: Date, daysInWeek: number) => {
 
   return dates.map(getFormattedDate);
 };
+
+export const getPreviousDate = (currentDate: Date, substr: number) => {
+  const result = currentDate.getDate() - substr;
+  return new Date(currentDate.setDate(result));
+};
+
+export const getNextDate = (currentDate: Date, suppl: number) => {
+  const result = currentDate.getDate() + suppl;
+  return new Date(currentDate.setDate(result));
+};
