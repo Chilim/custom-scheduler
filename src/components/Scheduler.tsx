@@ -26,11 +26,11 @@ const Scheduler = ({ duration = 30, view = 'week' }: PropsType) => {
     return null;
   };
 
-  const renderBodyCells = (line: CalendarBodyCell[]) => {
-    return line.map((l, idx) => <BodySlot key={`l.payload.time-${idx}`} params={l} />);
-  };
-
   const renderBody = () => {
+    const renderBodyCells = (line: CalendarBodyCell[]) => {
+      return line.map((l, idx) => <BodySlot key={`l.payload.time-${idx}`} params={l} />);
+    };
+
     if (!loading && body) {
       const rows = body.map((line, idx) => {
         return <Tr key={idx}>{renderBodyCells(line)}</Tr>;
