@@ -1,4 +1,6 @@
-const events = [
+import { GridEventType } from '../types';
+
+const events: GridEventType[] = [
   {
     id: 1,
     start: '2021-06-01 12:12:00',
