@@ -2,11 +2,11 @@ import React from 'react';
 import { Flex } from '@chakra-ui/react';
 import GridColumn from './GridColumn';
 import useSchedule from '../utils/useSchedule';
-import styles from './Grid.module.css';
 import GridCell from './GridCell';
-import { WeekDay } from '../types';
+import { GridEventType, WeekDay } from '../types';
 import GridShadowColumn from './GridShadowColumn';
 import events from '../mocks/events';
+import { getFormattedDate } from '../utils/timeUtils';
 
 type PropsType = {
   duration: number;
@@ -40,8 +40,6 @@ const getOwnEvents = (allEvents: GridEventType[], columnDate: string) => {
 
 const Grid = ({ duration = 30, view = 'week', date }: PropsType) => {
   const { header, body, loading } = useSchedule(view, duration, date);
-
-  const getOwnEvents = () => null;
 
   const renderGrid = () => {
     if (header && body) {
