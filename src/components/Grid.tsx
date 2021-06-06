@@ -59,18 +59,18 @@ const Grid = ({ duration = 30, view = 'week', date }: PropsType) => {
       const columns = data.map((d, colIdx) => {
         const key = `col-${colIdx}`;
         const isTimeColumn = colIdx === 0;
+        const columnDate = header[colIdx].date as string;
+        const columnDay = header[colIdx].label as WeekDay;
         return (
           <GridColumn key={key} isTimeColumn={isTimeColumn}>
             {d.map((label, cellIdx) => {
-              const cellDate = header[colIdx].date as string;
-              const cellDay = header[colIdx].label as WeekDay;
               const cellKey = `col-${colIdx};cell-${cellIdx}`;
               return (
                 <GridCell
                   key={cellKey}
                   time={label}
-                  date={cellDate}
-                  day={cellDay}
+                  date={columnDate}
+                  day={columnDay}
                   type={getCellType(colIdx, cellIdx)}
                 />
               );
