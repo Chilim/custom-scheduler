@@ -8,7 +8,7 @@ export type CalendarHeaderCell = {
   date: string | null;
 };
 
-export type CalendarBodyCellType = 'timeCell' | 'dataCell';
+export type GridCellType = 'timeCell' | 'dataCell' | 'dayCell' | 'zeroCell';
 
 export type CalendarBodyCell = {
   type: CalendarBodyCellType;
@@ -16,4 +16,16 @@ export type CalendarBodyCell = {
     time: string;
     day: string | null;
   };
+};
+
+export type GridCell = {
+  label: string;
+};
+
+export type GridEventType = {
+  id: number;
+  start: string;
+  end: string;
+  comment: string;
+  title: string;
 };
