@@ -75,7 +75,13 @@ const Grid = ({ duration = 30, view = 'week', date }: PropsType) => {
                 />
               );
             })}
-            {!isTimeColumn && <GridShadowColumn key={key} events={events} />}
+            {!isTimeColumn && (
+              <GridShadowColumn
+                key={key}
+                events={getOwnEvents(events, columnDate)}
+                timeSlots={body}
+              />
+            )}
           </GridColumn>
         );
       });
