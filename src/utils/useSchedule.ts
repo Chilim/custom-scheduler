@@ -11,11 +11,11 @@ const actions = {
   setParams: (view: CalendarView, step: number) => ({ type: 'SET_PARAMS', view, step } as const),
   toggleCreateGrid: (pred: boolean) => ({ type: 'TOGGLE_CREATE_GRID', pred } as const),
   toogleLoading: (pred: boolean) => ({ type: 'TOGGLE_LOADING', pred } as const),
-  createGrid: (header: CalendarHeaderCell[], body: CalendarBodyCell[][]) =>
+  createGrid: (days: CalendarHeaderCell[], timeSlots: string[]) =>
     ({
       type: 'CREATE_GRID',
-      header,
-      body,
+      days,
+      timeSlots,
     } as const),
 };
 
@@ -29,8 +29,8 @@ type InitialState = {
   step: number;
   rowsNumber: number;
   columnsNumber: number;
-  gridHeader: CalendarHeaderCell[] | null;
-  gridBody: CalendarBodyCell[][] | null;
+  days: CalendarHeaderCell[] | null;
+  timeSlots: string[] | null;
   loading: boolean;
 };
 
@@ -41,8 +41,8 @@ const initialState: InitialState = {
   step: 30,
   rowsNumber: 0,
   columnsNumber: 0,
-  gridHeader: null,
-  gridBody: null,
+  days: null,
+  timeSlots: null,
   loading: true,
 };
 
@@ -66,7 +66,7 @@ const reducer = (state: typeof initialState = initialState, action: ActionsType)
     }
 
     case 'CREATE_GRID': {
-      return { ...state, gridHeader: action.header, gridBody: action.body };
+      return { ...state, days: action.days, timeSlots: action.timeSlots };
     }
 
     default:
@@ -99,8 +99,8 @@ const useSchedule = (view: CalendarView, step = 30, date: Date) => {
         state.columnsNumber,
         state.pivot as Date,
       );
-      const { header, body } = gridService.generateTable();
-      dispatch({ type: 'CREATE_GRID', header, body });
+      const { days, timeSlots } = gridService.generateTable();
+      dispatch({ type: 'CREATE_GRID', days, timeSlots });
       dispatch({ type: 'TOGGLE_LOADING', pred: false });
     }
   }, [
@@ -114,10 +114,10 @@ const useSchedule = (view: CalendarView, step = 30, date: Date) => {
 
   const memoizedGrid = React.useMemo(
     () => ({
-      header: state.gridHeader,
-      body: state.gridBody,
+      header: state.days,
+      body: state.timeSlots,
     }),
-    [state.gridHeader, state.gridBody],
+    [state.days, state.timeSlots],
   );
 
   return { header: memoizedGrid.header, body: memoizedGrid.body, loading: state.loading };
