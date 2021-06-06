@@ -83,7 +83,7 @@ export class CalendarService {
   }
 
   private fillGridWithValues(layout: number[][], days: CalendarHeaderCell[], timeSlots: string[]) {
-    const header = [{ label: null, accessor: null, date: null }, ...days];
+    const header = [{ label: null, accessor: 'time', date: null }, ...days];
 
     const mappedBody = layout.reduce((acc, coord, idx) => {
       const [column, row] = coord;
@@ -113,9 +113,8 @@ export class CalendarService {
   }
 
   generateTable() {
-    const layout = this.generateGrid();
-    const days = this.getHeader();
+    const days = [{ label: '', accessor: '', date: null }, ...this.getHeader()];
     const timeSlots = this.getTimeSlots();
-    return this.fillGridWithValues(layout, days, timeSlots);
+    return { days, timeSlots };
   }
 }
