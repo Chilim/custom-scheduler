@@ -106,3 +106,8 @@ export const getNextDate = (currentDate: Date, suppl: number) => {
   const result = currentDate.getDate() + suppl;
   return new Date(currentDate.setDate(result));
 };
+
+export const getMinutesfromStringTime = (strTime: string) => {
+  const [hours, minutes] = strTime.split(':');
+  return Number(hours) * 60 + Number(minutes);
+};
