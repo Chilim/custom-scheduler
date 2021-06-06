@@ -39,6 +39,10 @@ export const formatDate = (today: Date) => {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    timeZoneName: 'short',
   } as const;
 
   return new Intl.DateTimeFormat('de-DE', options).format(today);
@@ -47,7 +51,8 @@ export const formatDate = (today: Date) => {
 export const extractDateValues = (dateStr: string) => {
   const cleared = dateStr.replace(/[.,]/g, '');
   const list = cleared.split(' ');
-  return { day: list[0], date: list[1], month: list[2], year: list[3] };
+  // { day: list[0], date: list[1], month: list[2], year: list[3], time: list[4].slice(0, 5) };
+  return { day: list[0], date: list[1], month: list[2], year: list[3], time: list[4].slice(0, 5) };
 };
 
 export const getToday = () => new Date();
