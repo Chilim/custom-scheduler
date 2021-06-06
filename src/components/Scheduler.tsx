@@ -28,7 +28,7 @@ const Scheduler = () => {
   const memoizedControls = React.useMemo(() => ({ next, previous, selectView }), [view]);
 
   return (
-    <Flex flexDir="column">
+    <Flex flexDir="column" h="100vh">
       <Toolbar controls={memoizedControls} />
       <Grid date={date} view={view} duration={30} />
     </Flex>
