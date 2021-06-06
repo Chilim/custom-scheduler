@@ -53,5 +53,7 @@ module.exports = {
         ignoreReadBeforeAssign: false,
       },
     ],
+    'linebreak-style': 0,
+    'operator-linebreak': 'off',
   },
 };
