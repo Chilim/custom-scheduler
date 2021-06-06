@@ -72,8 +72,15 @@ const getCurentDate = (date: Date, opNum: number) => {
   return new Date(date.setDate(newDate));
 };
 
+const getStartOfWeek = (currentDate: Date) => {
+  const first =
+    currentDate.getDate() - currentDate.getDay() + (currentDate.getDay() === 0 ? -6 : 1);
+  return new Date(currentDate.setDate(first)).toUTCString();
+};
+
 export const getWeekDates = (currentDate: Date, daysInWeek: number) => {
-  const range = [...Array(daysInWeek).keys()].map(() => new Date(currentDate));
+  const startOfWeek = getStartOfWeek(currentDate);
+  const range = [...Array(daysInWeek).keys()].map(() => new Date(startOfWeek));
   const dates = range.map((date, idx) => {
     return getCurentDate(date, idx);
   });
