@@ -21,6 +21,23 @@ const getCellType = (columnIdx: number, cellIdx: number) => {
   return 'dataCell';
 };
 
+const getOwnEvents = (allEvents: GridEventType[], columnDate: string) => {
+  const parsedEvents = allEvents.map((evt) => getFormattedDate(new Date(evt.start)));
+  const idxs = [] as number[];
+  parsedEvents.forEach((pEvt, idx) => {
+    if (pEvt.date === columnDate) {
+      idxs.push(idx);
+    }
+  });
+  const ownEvents = [] as GridEventType[];
+  allEvents.forEach((evt, idx) => {
+    if (idxs.includes(idx)) {
+      ownEvents.push(evt);
+    }
+  });
+  return ownEvents;
+};
+
 const Grid = ({ duration = 30, view = 'week', date }: PropsType) => {
   const { header, body, loading } = useSchedule(view, duration, date);
 
