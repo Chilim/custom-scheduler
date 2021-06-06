@@ -46,5 +46,12 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'import/prefer-default-export': 'off',
     'react/prop-types': 'off',
+    'prefer-const': [
+      'warn',
+      {
+        destructuring: 'any',
+        ignoreReadBeforeAssign: false,
+      },
+    ],
   },
 };
