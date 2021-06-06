@@ -90,7 +90,7 @@ const Grid = ({ duration = 30, view = 'week', date }: PropsType) => {
     return null;
   };
 
-  return <Flex>{renderGrid()}</Flex>;
+  return <Flex>{!loading && renderGrid()}</Flex>;
 };
 
 export default Grid;
