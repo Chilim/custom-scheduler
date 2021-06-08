@@ -54,7 +54,16 @@ type PropsType = {
 const GridEvent = ({ event, timeSlots, columnHeight }: PropsType) => {
   const { top, height } = getPositionY(timeSlots, 40, event);
   return (
-    <Box flex={1} h="35px" bg="twitter.500" border="1px solid red" position="relative" top={top} />
+    <Box
+      flex={1}
+      h={`${height}px`}
+      bg="twitter.500"
+      border="1px solid red"
+      position="relative"
+      top={top}
+    >
+      {event.id}
+    </Box>
   );
 };
 
