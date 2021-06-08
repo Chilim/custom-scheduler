@@ -24,6 +24,11 @@ const findDiff = (slotTime: string, evtTime: string) => {
   return evtTimeInMinutes - slotTimeInMinutes;
 };
 
+const getEventDuration = (startTime: string, endTime: string) => {
+  const startTimeInMinutes = getMinutesfromStringTime(startTime);
+  const endTimeInMinutes = getMinutesfromStringTime(endTime);
+  return endTimeInMinutes - startTimeInMinutes;
+};
 
 const getPositionY = (timeSlots: string[], rowHeight: number, event: GridEventType) => {
   const { start, end } = event;
