@@ -41,8 +41,11 @@ const getPositionY = (timeSlots: string[], rowHeight: number, event: GridEventTy
 
 type PropsType = {
   event: GridEventType;
-  timeSlots: string[];
-  columnHeight: number;
+  height: number;
+  width: number;
+  top: number;
+  left: number;
+  zIndex: number;
 };
 
 const GridEvent = ({ event, timeSlots, columnHeight }: PropsType) => {
@@ -51,10 +54,13 @@ const GridEvent = ({ event, timeSlots, columnHeight }: PropsType) => {
     <Box
       flex={1}
       h={`${height}px`}
+      w={`${width}px`}
       bg="twitter.500"
       border="1px solid red"
-      position="relative"
+      position="absolute"
       top={top}
+      left={left}
+      zIndex={zIndex}
     >
       {event.id}
     </Box>
