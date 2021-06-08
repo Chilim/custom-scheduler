@@ -4,6 +4,9 @@ import { Box } from '@chakra-ui/react';
 import { GridEventType } from '../types';
 import GridEvent from './GridEvent';
 
+// TODO: group events by start, check number of events start at the same time
+// TODO:
+
 const StyledContainer = styled(Box)`
   position: absolute;
   width: 100%;
@@ -20,7 +23,6 @@ type PropsType = {
 const GridShadowColumn = ({ events, timeSlots }: PropsType) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const [height, setheight] = React.useState(0);
-  const showMore = events.length >= 5;
 
   React.useEffect(() => {
     if (ref) {
@@ -30,12 +32,12 @@ const GridShadowColumn = ({ events, timeSlots }: PropsType) => {
   }, []);
 
   const renderEvents = () => {
-    if (events.length >= 5) {
-      const limited = events.slice(0, 3);
-      return limited.map((evt) => (
-        <GridEvent key={evt.id} event={evt} columnHeight={height} timeSlots={timeSlots} />
-      ));
-    }
+    // if (events.length >= 5) {
+    //   const limited = events.slice(0, 3);
+    //   return limited.map((evt) => (
+    //     <GridEvent key={evt.id} event={evt} columnHeight={height} timeSlots={timeSlots} />
+    //   ));
+    // }
     return events.map((evt) => (
       <GridEvent key={evt.id} event={evt} columnHeight={height} timeSlots={timeSlots} />
     ));
