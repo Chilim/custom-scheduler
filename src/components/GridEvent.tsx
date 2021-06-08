@@ -24,19 +24,21 @@ const findDiff = (slotTime: string, evtTime: string) => {
   return evtTimeInMinutes - slotTimeInMinutes;
 };
 
-const getPositionY = (
-  timeSlots: string[],
-  columnHeight: number,
-  rowHeight: number,
-  ownDate: string,
-) => {
-  const evtDate = new Date(ownDate);
-  const { time: evtTime } = getFormattedDate(evtDate);
-  const closesTimeSlot = findClosest(evtTime, timeSlots);
+
+const getPositionY = (timeSlots: string[], rowHeight: number, event: GridEventType) => {
+  const { start, end } = event;
+  const evtStart = new Date(start);
+  const evtEnd = new Date(end);
+  const { time: evtStartTime } = getFormattedDate(evtStart);
+  const { time: evtEndTime } = getFormattedDate(evtEnd);
+  const closesTimeSlot = findClosest(evtStartTime, timeSlots);
   const indexOfClosest = timeSlots.findIndex((s) => s === closesTimeSlot);
   const closestTopPosition = indexOfClosest * rowHeight;
-  const diff = findDiff(closesTimeSlot as string, evtTime);
-  return closestTopPosition + diff;
+  const diff = findDiff(closesTimeSlot as string, evtStartTime);
+  const ratio = rowHeight / 30; // where 30 is a duration of slot
+  const eventDuration = getEventDuration(evtStartTime, evtEndTime);
+  return { top: closestTopPosition + diff * ratio, height: eventDuration * ratio };
+};
 };
 
 const GridEvent = ({ event, timeSlots, columnHeight }: PropsType) => {
