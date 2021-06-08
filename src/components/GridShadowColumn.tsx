@@ -4,10 +4,7 @@ import { Box } from '@chakra-ui/react';
 import { GridEventType } from '../types';
 import GridEvent from './GridEvent';
 
-// TODO: group events by start, check number of events start at the same time
-// TODO:
-
-const StyledContainer = styled(Box)`
+const OuterContainer = styled(Box)`
   position: absolute;
   width: 100%;
   height: calc(100% - 40px);
