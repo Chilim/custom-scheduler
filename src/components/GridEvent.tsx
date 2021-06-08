@@ -52,7 +52,7 @@ type PropsType = {
 };
 
 const GridEvent = ({ event, timeSlots, columnHeight }: PropsType) => {
-  const top = getPositionY(timeSlots, columnHeight, 40, event.start);
+  const { top, height } = getPositionY(timeSlots, 40, event);
   return (
     <Box flex={1} h="35px" bg="twitter.500" border="1px solid red" position="relative" top={top} />
   );
