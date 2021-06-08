@@ -3,12 +3,6 @@ import React from 'react';
 import { GridEventType } from '../types';
 import { getFormattedDate, getMinutesfromStringTime } from '../utils/timeUtils';
 
-type PropsType = {
-  event: GridEventType;
-  timeSlots: string[];
-  columnHeight: number;
-};
-
 const findClosest = (evtStart: string, timeSlots: string[]) => {
   const [evtHours] = evtStart.split(':');
   const result = timeSlots.find((tSlot) => {
