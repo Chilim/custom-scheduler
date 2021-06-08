@@ -48,8 +48,7 @@ type PropsType = {
   zIndex: number;
 };
 
-const GridEvent = ({ event, timeSlots, columnHeight }: PropsType) => {
-  const { top, height } = getPositionY(timeSlots, 40, event);
+const GridEvent = ({ event, top, height, width, left, zIndex }: PropsType) => {
   return (
     <Box
       flex={1}
