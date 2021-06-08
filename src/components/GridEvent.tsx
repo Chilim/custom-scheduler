@@ -44,6 +44,11 @@ const getPositionY = (timeSlots: string[], rowHeight: number, event: GridEventTy
   const eventDuration = getEventDuration(evtStartTime, evtEndTime);
   return { top: closestTopPosition + diff * ratio, height: eventDuration * ratio };
 };
+
+type PropsType = {
+  event: GridEventType;
+  timeSlots: string[];
+  columnHeight: number;
 };
 
 const GridEvent = ({ event, timeSlots, columnHeight }: PropsType) => {
