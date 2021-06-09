@@ -20,13 +20,77 @@ type PropsType = {
   day: WeekDay;
   date: string;
   type: GridCellType;
+  createEvent: (evt: Omit<GridEventType, 'id'>) => void;
 };
 
-const GridCell = ({ time, day, date, type }: PropsType) => {
+const GridCell = ({ time, day, date, type, createEvent }: PropsType) => {
+  const [newEventData, setNewEventData] = React.useState({} as Omit<GridEventType, 'id'>);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: string) => {
+    setNewEventData({ ...newEventData, [fieldName]: e.target.value });
+  };
+
+  const onCreateEvent = (close: () => void) => {
+    const newEvent = {
+      start: convertToDate(newEventData.start, date),
+      end: convertToDate(newEventData.end, date),
+      title: newEventData.title,
+      comment: newEventData.comment,
+    };
+    createEvent(newEvent);
+    close();
+  };
+
   const getCellContent = () => {
     if (type === 'timeCell') return time;
     if (type === 'dayCell') return `${day}.${date}`;
-    if (type === 'zeroCell') return null;
+    if (type === 'dataCell') {
+      return (
+        <Popover>
+          {({ onClose }) => (
+            <>
+              <PopoverTrigger>
+                <Box w={'100%'} h={'100%'} />
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>Create event</PopoverHeader>
+                <PopoverBody>
+                  <Stack spacing={3}>
+                    <Input
+                      placeholder="start"
+                      size="xs"
+                      value={newEventData.start}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e, 'start')}
+                    />
+                    <Input
+                      placeholder="end"
+                      size="xs"
+                      value={newEventData.end}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e, 'end')}
+                    />
+                    <Input
+                      placeholder="title"
+                      size="xs"
+                      value={newEventData.title}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e, 'title')}
+                    />
+                    <Input
+                      placeholder="comment"
+                      size="xs"
+                      value={newEventData.comment}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e, 'comment')}
+                    />
+                    <Button onClick={() => onCreateEvent(onClose)}>Submit</Button>
+                  </Stack>
+                </PopoverBody>
+              </PopoverContent>
+            </>
+          )}
+        </Popover>
+      );
+    }
     return null;
   };
 
