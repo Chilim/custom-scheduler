@@ -56,7 +56,7 @@ const Grid = ({ duration = 30, view = 'week', date, actions, events }: PropsType
     if (header && body) {
       const data = header.map((h, idx) => {
         const headerCell = idx === 0 ? '' : `${h.label}.${h.date}`;
-        const column = body.reduce(
+        return body.reduce(
           (acc, time) => {
             if (idx === 0) return [...acc, time];
             return [...acc, ''];
@@ -65,7 +65,7 @@ const Grid = ({ duration = 30, view = 'week', date, actions, events }: PropsType
         );
         return column;
       });
-      const columns = data.map((d, colIdx) => {
+      return data.map((d, colIdx) => {
         const key = `col-${colIdx}`;
         const isTimeColumn = colIdx === 0;
         const columnDate = header[colIdx].date as string;
