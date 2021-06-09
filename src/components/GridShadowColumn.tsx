@@ -11,6 +11,7 @@ const OuterContainer = styled(Box)`
   width: 100%;
   height: calc(100% - 40px);
   top: 40px;
+  pointer-events: none;
 `;
 
 const InnerContainer = styled(Box)`
