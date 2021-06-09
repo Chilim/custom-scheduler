@@ -38,7 +38,18 @@ const getOwnEvents = (allEvents: GridEventType[], columnDate: string) => {
   return ownEvents;
 };
 
-const Grid = ({ duration = 30, view = 'week', date }: PropsType) => {
+type PropsType = {
+  duration: number;
+  view: 'week' | 'day';
+  date: Date;
+  actions: {
+    updateEvent: (evt: GridEventType) => void;
+    deleteEvent: (id: number) => void;
+    createEvent: (evt: Omit<GridEventType, 'id'>) => void;
+  };
+  events: GridEventType[];
+};
+const Grid = ({ duration = 30, view = 'week', date, actions, events }: PropsType) => {
   const { header, body, loading } = useSchedule(view, duration, date);
 
   const renderGrid = () => {
