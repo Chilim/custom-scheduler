@@ -1,6 +1,19 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
-import { GridCellType, WeekDay } from '../types';
+import {
+  Box,
+  Button,
+  Input,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+  Stack,
+} from '@chakra-ui/react';
+import { GridCellType, GridEventType, WeekDay } from '../types';
+import { convertToDate } from '../utils/timeUtils';
 
 type PropsType = {
   time: string;
