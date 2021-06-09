@@ -23,6 +23,8 @@ const GridEvent = ({ event, top, height, width, left, zIndex }: PropsType) => {
       top={top}
       left={left}
       zIndex={zIndex}
+      onClick={() => alert('Hello')}
+      pointerEvents="auto"
     >
       {event.id}
     </Box>
