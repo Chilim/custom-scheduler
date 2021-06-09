@@ -39,9 +39,9 @@ export const formatDate = (today: Date) => {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
     timeZoneName: 'short',
   } as const;
 
@@ -110,4 +110,13 @@ export const getNextDate = (currentDate: Date, suppl: number) => {
 export const getMinutesfromStringTime = (strTime: string) => {
   const [hours, minutes] = strTime.split(':');
   return Number(hours) * 60 + Number(minutes);
+};
+
+export const convertToDate = (time: string, date: string) => {
+  const [hours, minutes] = time.split(':');
+  const today = new Date();
+  today.setDate(Number(date));
+  today.setHours(Number(hours));
+  today.setMinutes(Number(minutes));
+  return `${today.toISOString().slice(0, 10)} ${time}:00`;
 };
