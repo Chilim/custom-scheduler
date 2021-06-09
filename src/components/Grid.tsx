@@ -5,14 +5,7 @@ import useSchedule from '../utils/useSchedule';
 import GridCell from './GridCell';
 import { GridEventType, WeekDay } from '../types';
 import GridShadowColumn from './GridShadowColumn';
-import events from '../mocks/events';
 import { getFormattedDate } from '../utils/timeUtils';
-
-type PropsType = {
-  duration: number;
-  view: 'week' | 'day';
-  date: Date;
-};
 
 const getCellType = (columnIdx: number, cellIdx: number) => {
   if (cellIdx === 0 && columnIdx === 0) return 'zeroCell';
@@ -63,7 +56,6 @@ const Grid = ({ duration = 30, view = 'week', date, actions, events }: PropsType
           },
           [headerCell] as string[],
         );
-        return column;
       });
       return data.map((d, colIdx) => {
         const key = `col-${colIdx}`;
@@ -95,7 +87,6 @@ const Grid = ({ duration = 30, view = 'week', date, actions, events }: PropsType
           </GridColumn>
         );
       });
-      return columns;
     }
     return null;
   };
