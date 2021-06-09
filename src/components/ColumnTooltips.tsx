@@ -24,6 +24,7 @@ const ColumnTooltips = ({ overlappedEvents }: PropsType) => {
               textAlign: 'center',
               background: 'skyblue',
               borderRadius: '50%',
+              pointerEvents: 'auto',
             }}
           >
             +
