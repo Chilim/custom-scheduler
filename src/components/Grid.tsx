@@ -81,6 +81,7 @@ const Grid = ({ duration = 30, view = 'week', date, actions, events }: PropsType
                   date={columnDate}
                   day={columnDay}
                   type={getCellType(colIdx, cellIdx)}
+                  createEvent={actions.createEvent}
                 />
               );
             })}
