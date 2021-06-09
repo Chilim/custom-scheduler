@@ -12,7 +12,7 @@ const ColumnTooltips = ({ overlappedEvents }: PropsType) => {
       return null;
     }
     return overlappedEvents.map((oEvt) => (
-      <Popover>
+      <Popover key={oEvt.top}>
         <PopoverTrigger>
           <Button
             size={'sm'}
