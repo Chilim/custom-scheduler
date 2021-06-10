@@ -37,8 +37,8 @@ const GridCell = ({ time, day, date, type, createEvent }: PropsType) => {
       title: newEventData.title,
       comment: newEventData.comment,
     };
-    createEvent(newEvent);
     close();
+    createEvent(newEvent);
   };
 
   const getCellContent = () => {
