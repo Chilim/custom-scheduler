@@ -15,11 +15,7 @@ const getColumnStyle = (isTimeColumn: boolean) => {
 };
 
 const GridColumn = ({ children, isTimeColumn }: PropsType) => {
-  return (
-    <Box position="relative" w={isTimeColumn ? '100px' : '200px'} borderRight="1px solid black">
-      {children}
-    </Box>
-  );
+  return <Box style={getColumnStyle(isTimeColumn) as CSSProperties}>{children}</Box>;
 };
 
 export default GridColumn;
