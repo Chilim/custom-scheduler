@@ -15,7 +15,7 @@ const ColumnTooltips = ({ overlappedEvents }: PropsType) => {
       <Popover key={oEvt.top}>
         <PopoverTrigger>
           <Button
-            size={'sm'}
+            size={'xs'}
             style={{
               position: 'absolute',
               top: oEvt.top,
@@ -30,7 +30,7 @@ const ColumnTooltips = ({ overlappedEvents }: PropsType) => {
             +
           </Button>
         </PopoverTrigger>
-        <PopoverContent>there are two more items...</PopoverContent>
+        <PopoverContent>{`there ${oEvt.events.length} items together`}</PopoverContent>
       </Popover>
     ));
   };
