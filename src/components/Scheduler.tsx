@@ -47,7 +47,7 @@ const Scheduler = ({ data }: PropsType) => {
   };
 
   const controls = { next, previous, selectView };
-  const eventActions = { updateEvent, deleteEvent, createEvent };
+  const eventActions = React.useMemo(() => ({ updateEvent, deleteEvent, createEvent }), []);
 
   return (
     <Flex flexDir="column" h="100vh">
