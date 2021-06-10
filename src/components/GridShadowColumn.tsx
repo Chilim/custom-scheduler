@@ -100,7 +100,7 @@ const GridShadowColumn = ({ events, timeSlots, rowHeight = 40, slotDuration = 30
 
   const getZIndex = (evt: GridEventType) => {
     const { start } = evt;
-    const keys = [...mappedEvents.keys()];
+    const keys = [...mappedEvents.keys()].sort();
     const ownIndex = keys.findIndex((k) => k === start);
     return ownIndex + 1;
   };
