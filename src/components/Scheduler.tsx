@@ -42,17 +42,17 @@ const Scheduler = ({ data }: PropsType) => {
   const createEvent = (newEventDate: Omit<GridEventType, 'id'>) => {
     const newId = events.length + 1;
     const updatedEvts = [...events, { ...newEventDate, id: newId }];
-    console.log('updatedEvts', updatedEvts);
+    console.log('updatedEvts:', updatedEvts);
     setEvents(updatedEvts);
   };
 
-  const memoizedControls = React.useMemo(() => ({ next, previous, selectView }), [view]);
-  const memoizedEventActions = React.useMemo(() => ({ updateEvent, deleteEvent, createEvent }), []);
+  const controls = { next, previous, selectView };
+  const eventActions = { updateEvent, deleteEvent, createEvent };
 
   return (
     <Flex flexDir="column" h="100vh">
-      <Toolbar controls={memoizedControls} />
-      <Grid date={date} view={view} duration={30} actions={memoizedEventActions} events={events} />
+      <Toolbar controls={controls} />
+      <Grid date={date} view={view} duration={30} actions={eventActions} events={events} />
     </Flex>
   );
 };
