@@ -1,98 +1,81 @@
 import React from 'react';
-import {
-  Box,
-  Button,
-  Input,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-  Stack,
-} from '@chakra-ui/react';
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { GridCellType, GridEventType, WeekDay } from '../types';
-import { convertToDate } from '../utils/timeUtils';
+import CreateModal from './CreateModal';
+
+const centerXY = css`
+  display: grid;
+  justify-content: center;
+  align-items: center;
+`;
+
+const HeaderCell = styled.div`
+  ${centerXY};
+  height: 70px;
+  font-size: 20px;
+  color: #282c34;
+`;
+
+const TimeSlotCell = styled.div`
+  ${centerXY};
+  height: 40px;
+  font-size: 12px;
+  color: #282c34;
+`;
+
+const ZeroSlotCell = styled.div`
+  height: 70px;
+`;
+
+const DataSlotCell = styled.div`
+  width: 100%;
+  height: 40px;
+  pointer-events: auto;
+  border-right: #d3d3d3 1px solid;
+  border-bottom: #d3d3d3 1px solid;
+`;
 
 type PropsType = {
   time: string;
   day: WeekDay;
   date: string;
   type: GridCellType;
+  rowHeight?: number;
+  cellIdx: number;
   createEvent: (evt: Omit<GridEventType, 'id'>) => void;
 };
 
-const GridCell = ({ time, day, date, type, createEvent }: PropsType) => {
-  const [newEventData, setNewEventData] = React.useState({} as Omit<GridEventType, 'id'>);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: string) => {
-    setNewEventData({ ...newEventData, [fieldName]: e.target.value });
-  };
-
-  const onCreateEvent = (close: () => void) => {
-    const newEvent = {
-      start: convertToDate(newEventData.start, date),
-      end: convertToDate(newEventData.end, date),
-      title: newEventData.title,
-      comment: newEventData.comment,
-    };
-    close();
-    createEvent(newEvent);
-  };
-
+const GridCell = ({ time, day, date, type, createEvent, rowHeight = 40, cellIdx }: PropsType) => {
+  const [showModal, setShowModal] = React.useState(false);
   const getCellContent = () => {
     if (type === 'timeCell') return time;
-    if (type === 'dayCell') return `${day}.${date}`;
+    if (type === 'dayCell') return `${day}. ${date}`;
     if (type === 'dataCell') {
       return (
-        <Popover>
-          {({ onClose }) => (
-            <>
-              <PopoverTrigger>
-                <Box w={'100%'} h={'100%'} />
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverHeader>Create event</PopoverHeader>
-                <PopoverBody>
-                  <Stack spacing={3}>
-                    <Input
-                      placeholder="start"
-                      size="xs"
-                      value={newEventData.start}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e, 'start')}
-                    />
-                    <Input
-                      placeholder="end"
-                      size="xs"
-                      value={newEventData.end}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e, 'end')}
-                    />
-                    <Input
-                      placeholder="title"
-                      size="xs"
-                      value={newEventData.title}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e, 'title')}
-                    />
-                    <Input
-                      placeholder="comment"
-                      size="xs"
-                      value={newEventData.comment}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e, 'comment')}
-                    />
-                    <Button onClick={() => onCreateEvent(onClose)}>Submit</Button>
-                  </Stack>
-                </PopoverBody>
-              </PopoverContent>
-            </>
-          )}
-        </Popover>
+        <Flex
+          w="100%"
+          height="100%"
+          onClick={() => {
+            console.log('clocked');
+            setShowModal(true);
+          }}
+        />
       );
     }
+
     return null;
   };
+
+  const CellComponent =
+    type === 'dayCell'
+      ? HeaderCell
+      : type === 'timeCell'
+      ? TimeSlotCell
+      : type === 'dataCell'
+      ? DataSlotCell
+      : ZeroSlotCell;
 
   return (
     <Box h="40px" borderY="1px solid #efefefef">
