@@ -80,7 +80,18 @@ const GridCell = ({ time, day, date, type, createEvent, rowHeight = 40, cellIdx 
   return (
     <CellComponent>
       {getCellContent()}
-    </Box>
+      {showModal && (
+        <CreateModal
+          date={date}
+          time={time}
+          setShowModal={setShowModal}
+          isOpen={showModal}
+          createEvent={createEvent}
+          rowHeight={rowHeight}
+          cellIdx={cellIdx}
+        />
+      )}
+    </CellComponent>
   );
 };
 
