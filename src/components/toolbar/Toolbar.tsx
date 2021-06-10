@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex } from '@chakra-ui/react';
 import DaysControls from './DaysControls';
 import ViewsControl from './ViewsControl';
+import ToolbarDate from './ToolbarDate';
 import { CalendarView } from '../../types';
 
 type PropsType = {
@@ -10,13 +11,16 @@ type PropsType = {
     previous: () => void;
     selectView: (newView: CalendarView) => void;
   };
+  date: Date;
+  view: CalendarView;
 };
 
-const Toolbar = ({ controls }: PropsType) => {
+const Toolbar = ({ controls, date, view }: PropsType) => {
   return (
-    <Flex>
+    <Flex minH={'10%'} align={'center'} paddingLeft={'16px'} paddingRight={'16px'}>
       <DaysControls previous={controls.previous} next={controls.next} />
-      <ViewsControl selectView={controls.selectView} />
+      <ToolbarDate date={date} />
+      <ViewsControl selectView={controls.selectView} view={view} />
     </Flex>
   );
 };

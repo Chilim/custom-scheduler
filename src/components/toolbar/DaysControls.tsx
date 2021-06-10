@@ -1,20 +1,36 @@
 import React from 'react';
-import { Button, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { IconButton } from '@chakra-ui/react';
 
 type PropsType = {
   next: () => void;
   previous: () => void;
 };
 
+const sharedStyles = {
+  borderRadius: '50%',
+  backgroundColor: 'transparent',
+  marginRight: '10px',
+};
+
 const DaysControl = ({ next, previous }: PropsType) => {
   return (
     <Flex>
-      <Button color="yellow.500" onClick={previous}>
-        Previous
-      </Button>
-      <Button color="telegram.500" onClick={next}>
-        Next
-      </Button>
+      <IconButton
+        size={'sm'}
+        aria-label="Back"
+        icon={<ChevronLeftIcon w={'30px'} h={'30px'} color="gray.500" />}
+        onClick={previous}
+        style={sharedStyles}
+      />
+      <IconButton
+        size={'sm'}
+        aria-label="Next"
+        icon={<ChevronRightIcon w={'30px'} h={'30px'} color="gray.500" />}
+        onClick={next}
+        style={sharedStyles}
+      />
     </Flex>
   );
 };
