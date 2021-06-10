@@ -74,14 +74,18 @@ const Grid = ({ duration = 30, view = 'week', date, actions, events }: PropsType
                   day={columnDay}
                   type={getCellType(colIdx, cellIdx)}
                   createEvent={actions.createEvent}
+                  cellIdx={cellIdx}
                 />
               );
             })}
             {!isTimeColumn && (
               <GridShadowColumn
                 key={key}
+                view={view}
                 events={getOwnEvents(events, columnDate)}
                 timeSlots={body}
+                updateEvent={actions.updateEvent}
+                deleteEvent={actions.deleteEvent}
               />
             )}
           </GridColumn>
