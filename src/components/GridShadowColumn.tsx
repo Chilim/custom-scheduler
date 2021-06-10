@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Box } from '@chakra-ui/react';
-import { GridEventType } from '../types';
+import { CalendarView, GridEventType } from '../types';
 import GridEvent from './GridEvent';
 import { getFormattedDate, getMinutesfromStringTime } from '../utils/timeUtils';
 import ColumnTooltips from './ColumnTooltips';
+import useResize from '../utils/useResize';
 
 const OuterContainer = styled(Box)`
   position: absolute;
@@ -41,15 +42,28 @@ const getEventDuration = (startTime: string, endTime: string) => {
 };
 
 type PropsType = {
+  view: CalendarView;
   events: GridEventType[];
   timeSlots: string[];
   rowHeight?: number;
   slotDuration?: number;
+  updateEvent: (evt: GridEventType) => void;
+  deleteEvent: (id: number) => void;
 };
 
-const GridShadowColumn = ({ events, timeSlots, rowHeight = 40, slotDuration = 30 }: PropsType) => {
+const GridShadowColumn = ({
+  view,
+  events,
+  timeSlots,
+  rowHeight = 40,
+  slotDuration = 30,
+  updateEvent,
+  deleteEvent,
+}: PropsType) => {
   const limitPerRow = 3;
   const ref = React.useRef<HTMLDivElement>(null);
+  const colWidth = useResize(ref, view) as number;
+
   const mappedEvents = events.length
     ? events.reduce((acc, evt) => {
         const startTime = evt.start;
@@ -58,14 +72,6 @@ const GridShadowColumn = ({ events, timeSlots, rowHeight = 40, slotDuration = 30
           : acc.set(startTime, acc.get(startTime).concat(evt));
       }, new Map())
     : new Map();
-  const [colWidth, setColWidth] = React.useState(0);
-
-  React.useEffect(() => {
-    if (ref) {
-      const columnWidth = ref.current?.clientWidth as number;
-      setColWidth(columnWidth);
-    }
-  }, []);
 
   const getPositionY = (event: GridEventType) => {
     const { start, end } = event;
@@ -135,6 +141,8 @@ const GridShadowColumn = ({ events, timeSlots, rowHeight = 40, slotDuration = 30
           width={evtWidth}
           left={evtPosLeft}
           zIndex={zIndex}
+          updateEvent={updateEvent}
+          deleteEvent={deleteEvent}
         />
       );
     });
