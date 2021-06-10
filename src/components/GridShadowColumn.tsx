@@ -107,13 +107,12 @@ const GridShadowColumn = ({ events, timeSlots, rowHeight = 40, slotDuration = 30
 
   const isEvtOverlapped = (evt: GridEventType) => {
     let isOverlapped = false;
-    const keys = mappedEvents.keys();
-    for (const key of keys) {
-      const eventsOfKey = mappedEvents.get(key) as GridEventType[];
-      if (eventsOfKey.length > limitPerRow) {
-        const ownIdx = eventsOfKey.findIndex((kEvt) => kEvt.id === evt.id);
-        isOverlapped = ownIdx >= limitPerRow;
-      }
+    const eventsOfTime = mappedEvents.get(evt.start) as GridEventType[];
+    if (eventsOfTime.length > limitPerRow) {
+      const ownIdx = eventsOfTime.findIndex((tEvt) => {
+        return tEvt.id === evt.id;
+      });
+      isOverlapped = ownIdx >= limitPerRow;
     }
     return isOverlapped;
   };
