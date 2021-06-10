@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { Box } from '@chakra-ui/react';
 
 type PropsType = {
