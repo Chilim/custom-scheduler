@@ -78,7 +78,7 @@ const GridCell = ({ time, day, date, type, createEvent, rowHeight = 40, cellIdx 
       : ZeroSlotCell;
 
   return (
-    <Box h="40px" borderY="1px solid #efefefef">
+    <CellComponent>
       {getCellContent()}
     </Box>
   );
