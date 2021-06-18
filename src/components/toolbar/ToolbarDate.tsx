@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Text } from '@chakra-ui/react';
-import { formatDate, getFormattedDate } from '../../utils/timeUtils';
+import { getFormattedDate } from '../../utils/timeUtils';
 
 const ToolbarDate = ({ date }: { date: Date }) => {
   const { date: numberDate, year, month } = getFormattedDate(date);
