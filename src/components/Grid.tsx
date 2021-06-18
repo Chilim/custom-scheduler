@@ -105,7 +105,7 @@ const Grid = ({ duration = 30, view = 'week', date, actions, events, startFrom }
     return null;
   };
 
-  return <Flex>{!loading && renderGrid()}</Flex>;
+  return <Flex ref={tableRef}>{!loading && renderGrid()}</Flex>;
 };
 
 export default Grid;
