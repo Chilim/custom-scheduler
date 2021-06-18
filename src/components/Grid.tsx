@@ -95,6 +95,7 @@ const Grid = ({ duration = 30, view = 'week', date, actions, events, startFrom }
                 timeSlots={body}
                 updateEvent={actions.updateEvent}
                 deleteEvent={actions.deleteEvent}
+                fullWidth={tableWidth - 100}
               />
             )}
           </GridColumn>
