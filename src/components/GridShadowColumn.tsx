@@ -5,7 +5,6 @@ import { CalendarView, GridEventType } from '../types';
 import GridEvent from './GridEvent';
 import { getFormattedDate, getMinutesfromStringTime } from '../utils/timeUtils';
 import ColumnTooltips from './ColumnTooltips';
-import useResize from '../utils/useResize';
 
 const OuterContainer = styled(Box)`
   position: absolute;
