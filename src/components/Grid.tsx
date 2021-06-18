@@ -41,9 +41,18 @@ type PropsType = {
     createEvent: (evt: Omit<GridEventType, 'id'>) => void;
   };
   events: GridEventType[];
+  startFrom: string;
 };
-const Grid = ({ duration = 30, view = 'week', date, actions, events }: PropsType) => {
-  const { header, body, loading } = useSchedule(view, duration, date);
+const Grid = ({ duration = 30, view = 'week', date, actions, events, startFrom }: PropsType) => {
+  const { header, body, loading } = useSchedule(view, duration, date, startFrom);
+  const tableRef = React.useRef<HTMLDivElement>(null);
+  const [tableWidth, setTableWidth] = React.useState(0);
+
+  React.useLayoutEffect(() => {
+    if (tableRef) {
+      setTableWidth(tableRef.current?.clientWidth as number);
+    }
+  }, [tableRef]);
 
   const renderGrid = () => {
     if (header && body) {
