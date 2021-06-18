@@ -48,6 +48,7 @@ type PropsType = {
   slotDuration?: number;
   updateEvent: (evt: GridEventType) => void;
   deleteEvent: (id: number) => void;
+  fullWidth: number;
 };
 
 const GridShadowColumn = ({
@@ -58,10 +59,26 @@ const GridShadowColumn = ({
   slotDuration = 30,
   updateEvent,
   deleteEvent,
+  fullWidth,
 }: PropsType) => {
   const limitPerRow = 3;
   const ref = React.useRef<HTMLDivElement>(null);
-  const colWidth = useResize(ref, view) as number;
+  const [colWidth, setColWidth] = React.useState(0);
+
+  React.useLayoutEffect(() => {
+    const handleResize = () => {
+      setColWidth(ref.current?.clientWidth as number);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  React.useEffect(() => {
+    if (view === 'day') {
+      setColWidth(fullWidth);
+    }
+  }, [view, fullWidth]);
 
   const mappedEvents = events.length
     ? events.reduce((acc, evt) => {
@@ -148,13 +165,17 @@ const GridShadowColumn = ({
   };
 
   const getOverlappedEvents = () => {
-    const overlappedEvents = [] as { top: number; events: GridEventType[] }[];
+    const overlappedEvents = [] as { top: number; zIndex: number; events: GridEventType[] }[];
     const keys = mappedEvents.keys();
     for (const key of keys) {
       const eventsOfKey = mappedEvents.get(key);
       if (eventsOfKey.length > limitPerRow) {
         const { evtPosTop } = getPositionY(eventsOfKey[0]);
-        overlappedEvents.push({ top: evtPosTop, events: eventsOfKey });
+        overlappedEvents.push({
+          top: evtPosTop,
+          zIndex: getZIndex(eventsOfKey[0]),
+          events: eventsOfKey,
+        });
       }
     }
     return overlappedEvents;
