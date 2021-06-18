@@ -3,7 +3,7 @@ import { Popover, PopoverTrigger, PopoverContent, Button } from '@chakra-ui/reac
 import { GridEventType } from '../types';
 
 type PropsType = {
-  overlappedEvents: { top: number; events: GridEventType[] }[];
+  overlappedEvents: { top: number; zIndex: number; events: GridEventType[] }[];
 };
 
 const ColumnTooltips = ({ overlappedEvents }: PropsType) => {
@@ -19,8 +19,8 @@ const ColumnTooltips = ({ overlappedEvents }: PropsType) => {
             style={{
               position: 'absolute',
               top: oEvt.top,
-              zIndex: 9999,
-              right: '-25px',
+              zIndex: oEvt.zIndex,
+              right: '-10px',
               textAlign: 'center',
               background: 'skyblue',
               borderRadius: '50%',
