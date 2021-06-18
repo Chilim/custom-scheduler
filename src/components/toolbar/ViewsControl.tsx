@@ -1,6 +1,5 @@
 import React from 'react';
-import { Flex, Button } from '@chakra-ui/react';
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from '@chakra-ui/react';
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import { CalendarView } from '../../types';
 
 const getStyle = (ownView: CalendarView, selectedView: CalendarView) => {
