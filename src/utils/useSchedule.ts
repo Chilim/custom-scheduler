@@ -1,10 +1,9 @@
 import React from 'react';
-import { CalendarBodyCell, CalendarHeaderCell, CalendarView } from '../types';
+import { CalendarHeaderCell, CalendarView } from '../types';
 import { CalendarService } from './CalendarService';
 
 const HOURS_IN_A_DAY = 24;
 const MINUTES_IN_AN_HOUR = 60;
-const START_TIME = '00:00';
 
 const actions = {
   inititialize: (date: Date) => ({ type: 'INITIALIZE', date } as const),
@@ -74,7 +73,7 @@ const reducer = (state: typeof initialState = initialState, action: ActionsType)
   }
 };
 
-const useSchedule = (view: CalendarView, step = 30, date: Date) => {
+const useSchedule = (view: CalendarView, step = 30, date: Date, startFrom: string) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   /** first on mount set current date */
@@ -93,7 +92,7 @@ const useSchedule = (view: CalendarView, step = 30, date: Date) => {
     if (state.shallCreateGrid) {
       const gridService = new CalendarService(
         state.view,
-        START_TIME,
+        startFrom,
         state.rowsNumber,
         state.step,
         state.columnsNumber,
@@ -110,17 +109,13 @@ const useSchedule = (view: CalendarView, step = 30, date: Date) => {
     state.step,
     state.view,
     state.pivot,
+    startFrom,
   ]);
 
-  const memoizedGrid = React.useMemo(
-    () => ({
-      header: state.days,
-      body: state.timeSlots,
-    }),
-    [state.days, state.timeSlots],
-  );
+  const memoizedHeader = React.useMemo(() => state.days, [state.days]);
+  const memoizedBody = React.useMemo(() => state.timeSlots, [state.timeSlots]);
 
-  return { header: memoizedGrid.header, body: memoizedGrid.body, loading: state.loading };
+  return { header: memoizedHeader, body: memoizedBody, loading: state.loading };
 };
 
 export default useSchedule;
